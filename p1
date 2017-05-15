@@ -1,0 +1,25 @@
+### source this script to the working dir by calling . ./p1
+### such that the function name is not lost in the subshell
+### then call "name find replace"
+
+name() {
+#define 'find' and 'replace' variables 
+find=$1
+replace=$2
+
+#create replace directory
+mkdir ./$replace
+
+#search for files with 'find' and copy these files to the replace directory
+#--include option searches only for .txt files
+#-s suppresses grep messages
+#-l prints filenames
+#-w matches whole word instances of 'find'
+cp `grep --include=*.txt -slw "$find" *` ./$replace
+
+#change to the replace directory
+cd ./$replace
+
+# use sed to find and replaces all instances of 'find'
+sed -i "s/$find/$replace/g" *
+}
